@@ -9,8 +9,10 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
-                "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "-I", "/usr/include/boost/",
+                "-L/usr/local/lib/",
+                "-lboost_thread",
+                "-o", "${fileDirname}/${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "${fileDirname}"
