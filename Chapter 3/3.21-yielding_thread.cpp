@@ -1,31 +1,31 @@
-#include <thread>
 #include <iostream>
-#include <string>
 #include <random>
+#include <string>
+#include <thread>
 
 namespace {
-    int val=0;
-    std::mutex mtx;
-}
+int val = 0;
+std::mutex mtx;
+}  // namespace
 
 int main() {
-
-    auto work = [&](const std::string& name){
-        while(true) {
+    auto work = [&](const std::string& name) {
+        while (true) {
             bool work_to_do = rand() % 2;
             if (work_to_do) {
                 // Do some work: Active wait for 3 second
-                std::cout << name << ": working" << std::endl;       
+                std::cout << name << ": working" << std::endl;
 
                 std::lock_guard<std::mutex> lock(mtx);
-                for (auto start = std::chrono::steady_clock::now(), now = start; now < start + std::chrono::seconds{3}; now = std::chrono::steady_clock::now()) {}
-            }
-            else {
+                for (auto start = std::chrono::steady_clock::now(), now = start; now < start + std::chrono::seconds{3};
+                     now = std::chrono::steady_clock::now()) {
+                }
+            } else {
                 // Let other threads do some work
-                std::cout << name << ": yielding" << std::endl;                
-                std::this_thread::yield(); 
+                std::cout << name << ": yielding" << std::endl;
+                std::this_thread::yield();
             }
-        }        
+        }
     };
 
     std::jthread t1(work, "t1");

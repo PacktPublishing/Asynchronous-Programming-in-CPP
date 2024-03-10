@@ -1,9 +1,9 @@
-#include <thread>
-#include <iostream>
 #include <chrono>
+#include <iostream>
+#include <thread>
 
 namespace {
-    int timeout = 3;
+int timeout = 3;
 }
 
 void daemonThread() {
@@ -15,12 +15,12 @@ void daemonThread() {
     std::cout << "Daemon thread exiting..." << std::endl;
 }
 
-int main() {    
+int main() {
     std::thread t(daemonThread);
     t.detach();
 
     std::this_thread::sleep_for(std::chrono::seconds(timeout + 1));
-    
+
     std::cout << "Main thread exiting..." << std::endl;
     return 0;
 }

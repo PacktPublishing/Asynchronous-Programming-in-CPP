@@ -1,15 +1,11 @@
-#include <thread>
 #include <iostream>
+#include <thread>
 
 thread_local int val = 0;
 
-void setValue(int newval) {
-    val = newval;
-}
+void setValue(int newval) { val = newval; }
 
-void printValue() {
-    std::cout << val;
-}
+void printValue() { std::cout << val; }
 
 void thread_func(int arg) {
     // The thread_local value is set and multiplied by 2
@@ -32,5 +28,5 @@ int main() {
 
     std::cout << val << std::endl;
 
-    return 0;    
+    return 0;
 }

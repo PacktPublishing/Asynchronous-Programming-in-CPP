@@ -1,9 +1,9 @@
 #include <iostream>
 #include <thread>
 
-int main() {    
+int main() {
     std::thread t1;
-    std::cout << "T1 joinable? " << t1.joinable() << std::endl;    
-    
+    std::cout << "T1 joinable? " << t1.joinable() << std::endl;
+
     return 0;
 }

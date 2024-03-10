@@ -1,13 +1,10 @@
-#include <thread>
 #include <iostream>
 #include <string>
+#include <thread>
 #include <vector>
 
-
 // Passing arguments by value
-void funcByValue(const std::string& str, int val) {
-    std::cout << "str: " << str << ", val: " << val << std::endl;
-}
+void funcByValue(const std::string& str, int val) { std::cout << "str: " << str << ", val: " << val << std::endl; }
 
 // Passing arguments by reference
 void modifyValues(std::string& str, int& val) {
@@ -23,7 +20,6 @@ void printVector(const std::vector<int>& v) {
     std::cout << std::endl;
 }
 
-
 int main() {
     // Passing arguments by value
     std::string str1{"Passing by value"};
@@ -37,7 +33,6 @@ int main() {
     t2.join();
     std::cout << "str: " << str2 << ", val: " << val << std::endl;
 
-
     // Passing argument by const reference
     std::vector<int> v{1, 2, 3, 4, 5};
     std::thread t3a(printVector, std::cref(v));
@@ -47,15 +42,13 @@ int main() {
     std::thread t3b(printVector, std::move(v));
     t3b.join();
 
-    // Note: Trying to access v here would result in undefined behavior    
-    // as V was moved into the thread and not usable anymore.    
+    // Note: Trying to access v here would result in undefined behavior
+    // as V was moved into the thread and not usable anymore.
 
     // Lambda function with captures
     std::string str4{"Hello"};
-    std::thread t4([&]() {
-        std::cout << "str: " << str4 << ", val: " << val << std::endl;
-    });
+    std::thread t4([&]() { std::cout << "str: " << str4 << ", val: " << val << std::endl; });
     t4.join();
 
-    return 0;    
+    return 0;
 }

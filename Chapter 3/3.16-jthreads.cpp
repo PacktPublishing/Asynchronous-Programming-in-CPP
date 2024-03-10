@@ -1,17 +1,16 @@
-#include <thread>
-#include <iostream>
 #include <chrono>
 #include <functional>
+#include <iostream>
+#include <thread>
 
 class JthreadWrapper {
-public:
-    JthreadWrapper(const std::function<void(const std::string&)>& func, const std::string& str) 
+   public:
+    JthreadWrapper(const std::function<void(const std::string&)>& func, const std::string& str)
         : t(func, str), name(str) {}
-    
-    ~JthreadWrapper() {
-        std::cout << "Thread " << name << " being destroyed" << std::endl;
-    }
-private:
+
+    ~JthreadWrapper() { std::cout << "Thread " << name << " being destroyed" << std::endl; }
+
+   private:
     std::jthread t;
     std::string name;
 };

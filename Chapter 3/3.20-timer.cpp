@@ -1,19 +1,18 @@
-#include <thread>
-#include <iostream>
 #include <chrono>
 #include <functional>
-#include <syncstream>
+#include <iostream>
 #include <ostream>
+#include <syncstream>
+#include <thread>
 
 namespace {
-    std::osyncstream synced_out(std::cout);
+std::osyncstream synced_out(std::cout);
 }
 
 using namespace std::chrono_literals;
 
-class Timer
-{
-public:
+class Timer {
+   public:
     typedef std::chrono::milliseconds Interval;
     typedef std::function<void(void)> Callback;
 
@@ -25,29 +24,24 @@ public:
                 val++;
                 callback();
                 synced_out.flush();
-                std::this_thread::sleep_for(std::chrono::milliseconds(200));                
+                std::this_thread::sleep_for(std::chrono::milliseconds(200));
             }
             synced_out << "Timer: Exit" << std::endl;
         });
     }
 
-    void stop() {
-        running.store(false);
-    }
+    void stop() { running.store(false); }
 
-private:
+   private:
     std::jthread t;
-    std::atomic_bool running{true};        
+    std::atomic_bool running{true};
     std::atomic_int32_t val{0};
 };
 
-int main(void)
-{
+int main(void) {
     // Create timer executing callback function every 500ms
     synced_out << "Main: Create timer" << std::endl;
-    Timer timer(std::chrono::milliseconds(500), [&]() {
-        synced_out << "Callback: Running..." << std::endl;
-    });
+    Timer timer(std::chrono::milliseconds(500), [&]() { synced_out << "Callback: Running..." << std::endl; });
 
     // Use secondary thread to stop timer after 2 seconds
     std::jthread t([&]() {
