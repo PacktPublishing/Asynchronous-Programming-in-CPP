@@ -9,6 +9,7 @@ namespace {
 std::osyncstream sync_out(std::cout);
 }
 
+
 using namespace std::chrono_literals;
 
 class Counter {

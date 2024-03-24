@@ -1,7 +1,12 @@
 #include <chrono>
 #include <functional>
 #include <iostream>
+#include <syncstream>
 #include <thread>
+
+namespace {
+std::osyncstream sync_out(std::cout);
+}
 
 class JthreadWrapper {
    public:
@@ -9,13 +14,13 @@ class JthreadWrapper {
         : t(func, str), name(str) {
             std::ostringstream oss;
             oss << "Thread " << name << " being created" << std::endl;
-            std::cout << oss.str();
+            sync_out << oss.str();
         }
 
     ~JthreadWrapper() { 
         std::ostringstream oss;
         oss << "Thread " << name << " being destroyed" << std::endl; 
-        std::cout << oss.str();
+        sync_out << oss.str();
     }
 
    private:
@@ -26,11 +31,11 @@ class JthreadWrapper {
 void func(const std::string& name) {
     std::stringstream oss;
     oss << "Thread " << name << " starting..." << std::endl;
-    std::cout << oss.str();
+    sync_out << oss.str();
     std::this_thread::sleep_for(std::chrono::seconds(1));
     oss.clear();    
     oss << "Thread " << name << " finishing..." << std::endl;
-    std::cout << oss.str();
+    sync_out << oss.str();
 }
 
 int main() {
@@ -41,7 +46,7 @@ int main() {
     std::this_thread::sleep_for(std::chrono::seconds(4));
 
     // t1, t2, t3 will be destroyed when main exits
-    std::cout << "Main thread exiting..." << std::endl;
+    sync_out << "Main thread exiting..." << std::endl;
 
     return 0;
 }
