@@ -21,9 +21,7 @@ if((CMAKE_CXX_COMPILER_ID MATCHES GNU) OR (CMAKE_CXX_COMPILER_ID MATCHES Clang))
 endif()
 
 # Set the output directory for binaries
-message("Binary output: ${CMAKE_BINARY_DIR}")
 set(BINARY_DIR ${CMAKE_BINARY_DIR}/bin)
-message("Binary dir 1: ${BINARY_DIR}")
 
 # Add chapters
 add_subdirectory(Chapter_03)
