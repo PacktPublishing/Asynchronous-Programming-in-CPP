@@ -8,50 +8,55 @@
 #define sync_cout std::osyncstream(std::cout)
 
 using namespace std::chrono_literals;
+using namespace std::chrono;
 
+template<typename Duration>
 class Timer {
    public:
-    typedef std::chrono::milliseconds Interval;
     typedef std::function<void(void)> Callback;
 
-    Timer(const Interval &interval, const Callback &callback) {
-        sync_cout << "Timer: Starting with interval " << interval << std::endl;
-        t = std::jthread([&]() {
-            while (running.load() == true) {
-                sync_cout << "Timer: Running callback " << val.load() << std::endl;
+    Timer(const Duration interval, const Callback& callback) {
+        auto value = duration_cast<milliseconds>(interval);
+        sync_cout << "Timer: Starting with interval of " << value << std::endl;
+
+        t = std::jthread([&](std::stop_token stop_token) {
+            while (!stop_token.stop_requested()) {
+                sync_cout << "Timer: Running callback " << val.load() << " ..." << std::endl;
                 val++;
                 callback();
+
+                sync_cout << "Timer: Sleeping..." << std::endl;
                 std::this_thread::sleep_for(interval);
             }
             sync_cout << "Timer: Exit" << std::endl;
         });
     }
 
-    void stop() { running.store(false); }
+    void stop() {
+        t.request_stop();
+    }
 
    private:
     std::jthread t;
-    std::atomic_bool running{true};
     std::atomic_int32_t val{0};
 };
 
 int main(void) {
-    // Create timer executing callback function every 500ms
+    // Create timer executing callback function every second
     sync_cout << "Main: Create timer" << std::endl;
-    Timer timer(500ms, [&]() {
+    Timer timer(1s, [&]() {
         sync_cout << "Callback: Running..." << std::endl;
-    });
-
-    // Use secondary thread to stop timer after 2 seconds
-    std::jthread t([&]() {
-        std::this_thread::sleep_for(2s);
-        sync_cout << "Thread2: Stopping timer" << std::endl;
-        timer.stop();
-        sync_cout << "Thread2: Exit thread" << std::endl;
     });
 
     // Wait main thread for 3 seconds
     std::this_thread::sleep_for(3s);
+
+    // Stop timer
+    sync_cout << "Main thread: Stop timer" << std::endl;
+    timer.stop();
+
+    // Wait main thread for 500ms while timer stops
+    std::this_thread::sleep_for(500ms);
     sync_cout << "Main thread: Exit" << std::endl;
     return 0;
 }

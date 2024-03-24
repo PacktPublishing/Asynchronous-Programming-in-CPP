@@ -1,11 +1,14 @@
 #include <iostream>
+#include <syncstream>
 #include <thread>
+
+#define sync_cout std::osyncstream(std::cout)
 
 thread_local int val = 0;
 
 void setValue(int newval) { val = newval; }
 
-void printValue() { std::cout << val; }
+void printValue() { sync_cout << val; }
 
 void multiplyByTwo(int arg) {
     // The thread_local value is set and multiplied by 2
