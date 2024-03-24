@@ -6,7 +6,7 @@ int main() {
     std::thread t1([]() {
         for (int i = 0; i < 100; ++i) {
             std::ostringstream oss;
-            oss << "the quick brown fox jumped over the lazy dog \n";
+            oss << "1 " << "2 " << "3 " << "4 " << "\n";
             std::cout << oss.str();
         }
     });
@@ -14,7 +14,7 @@ int main() {
     std::thread t2([]() {
         for (int i = 0; i < 100; ++i) {
             std::ostringstream oss;
-            oss << "my mother washes seashells by the sea shore \n";
+            oss << "5 " << "6 " << "7 " << "8 " << "\n";
             std::cout << oss.str();
         }
     });

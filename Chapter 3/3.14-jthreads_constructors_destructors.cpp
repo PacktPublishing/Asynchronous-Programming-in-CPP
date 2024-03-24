@@ -6,9 +6,17 @@
 class JthreadWrapper {
    public:
     JthreadWrapper(const std::function<void(const std::string&)>& func, const std::string& str)
-        : t(func, str), name(str) {}
+        : t(func, str), name(str) {
+            std::ostringstream oss;
+            oss << "Thread " << name << " being created" << std::endl;
+            std::cout << oss.str();
+        }
 
-    ~JthreadWrapper() { std::cout << "Thread " << name << " being destroyed" << std::endl; }
+    ~JthreadWrapper() { 
+        std::ostringstream oss;
+        oss << "Thread " << name << " being destroyed" << std::endl; 
+        std::cout << oss.str();
+    }
 
    private:
     std::jthread t;
@@ -16,9 +24,13 @@ class JthreadWrapper {
 };
 
 void func(const std::string& name) {
-    std::cout << "Thread " << name << " starting..." << std::endl;
+    std::stringstream oss;
+    oss << "Thread " << name << " starting..." << std::endl;
+    std::cout << oss.str();
     std::this_thread::sleep_for(std::chrono::seconds(1));
-    std::cout << "Thread " << name << " finishing..." << std::endl;
+    oss.clear();    
+    oss << "Thread " << name << " finishing..." << std::endl;
+    std::cout << oss.str();
 }
 
 int main() {

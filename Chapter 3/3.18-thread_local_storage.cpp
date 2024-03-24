@@ -7,7 +7,7 @@ void setValue(int newval) { val = newval; }
 
 void printValue() { std::cout << val; }
 
-void thread_func(int arg) {
+void multiplyByTwo(int arg) {
     // The thread_local value is set and multiplied by 2
     setValue(arg);
     val *= 2;
@@ -18,9 +18,9 @@ int main() {
     val = 1;  // Value in main thread
 
     // Each thread set its own value
-    std::thread t1(thread_func, 1);
-    std::thread t2(thread_func, 2);
-    std::thread t3(thread_func, 3);
+    std::thread t1(multiplyByTwo, 1);
+    std::thread t2(multiplyByTwo, 2);
+    std::thread t3(multiplyByTwo, 3);
 
     t1.join();
     t2.join();

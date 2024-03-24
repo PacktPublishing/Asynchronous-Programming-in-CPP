@@ -1,11 +1,15 @@
 #include <iostream>
 #include <thread>
 
-void func() { std::cout << "Using function pointer" << std::endl; }
+void func() { 
+    std::cout << "Using function pointer" << std::endl; 
+}
 
 class FuncObjectClass {
    public:
-    void operator()() { std::cout << "Using function object class" << std::endl; }
+    void operator()() { 
+        std::cout << "Using function object class" << std::endl; 
+    }
 };
 
 int main() {
@@ -13,11 +17,15 @@ int main() {
     std::thread t1(func);
 
     // Start thread 2 using a lambda function
-    auto lambda_func = []() { std::cout << "Using lambda function" << std::endl; };
+    auto lambda_func = []() { 
+        std::cout << "Using lambda function" << std::endl; 
+    };
     std::thread t2(lambda_func);
 
     // Start thread 3 using an embedded lambda function
-    std::thread t3([]() { std::cout << "Using embedded lambda function" << std::endl; });
+    std::thread t3([]() { 
+        std::cout << "Using embedded lambda function" << std::endl; 
+    });
 
     // Start thread 4 using a function object (overloading operator() )
     // FuncObjectClass obj1;
@@ -26,8 +34,12 @@ int main() {
     // Start thread 5 using a non-static member function
     class Obj {
        public:
-        void func() { std::cout << "Using a non-static member function" << std::endl; }
-        static void static_func() { std::cout << "Using a static member function" << std::endl; }
+        void func() { 
+            std::cout << "Using a non-static member function" << std::endl; 
+        }
+        static void static_func() { 
+            std::cout << "Using a static member function" << std::endl; 
+        }
     };
 
     Obj obj2;

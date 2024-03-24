@@ -7,7 +7,7 @@ int main() {
     std::cout << "Processors: " << processor_count << std::endl;
 
     const auto nthreads = boost::thread::hardware_concurrency();
-    std::cout << "Threads: " << nthreads << std::endl;
+    std::cout << "Processors: " << nthreads << std::endl;
 
     return 0;
 }
