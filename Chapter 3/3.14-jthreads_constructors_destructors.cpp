@@ -4,23 +4,17 @@
 #include <syncstream>
 #include <thread>
 
-namespace {
-std::osyncstream sync_out(std::cout);
-}
+#define sync_cout std::osyncstream(std::cout)
 
 class JthreadWrapper {
    public:
     JthreadWrapper(const std::function<void(const std::string&)>& func, const std::string& str)
         : t(func, str), name(str) {
-            std::ostringstream oss;
-            oss << "Thread " << name << " being created" << std::endl;
-            sync_out << oss.str();
+            sync_cout << "Thread " << name << " being created" << std::endl;
         }
 
     ~JthreadWrapper() { 
-        std::ostringstream oss;
-        oss << "Thread " << name << " being destroyed" << std::endl; 
-        sync_out << oss.str();
+        sync_cout << "Thread " << name << " being destroyed" << std::endl; 
     }
 
    private:
@@ -29,13 +23,9 @@ class JthreadWrapper {
 };
 
 void func(const std::string& name) {
-    std::stringstream oss;
-    oss << "Thread " << name << " starting..." << std::endl;
-    sync_out << oss.str();
+    sync_cout << "Thread " << name << " starting..." << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(1));
-    oss.clear();    
-    oss << "Thread " << name << " finishing..." << std::endl;
-    sync_out << oss.str();
+    sync_cout << "Thread " << name << " finishing..." << std::endl;
 }
 
 int main() {
@@ -46,7 +36,7 @@ int main() {
     std::this_thread::sleep_for(std::chrono::seconds(4));
 
     // t1, t2, t3 will be destroyed when main exits
-    sync_out << "Main thread exiting..." << std::endl;
+    sync_cout << "Main thread exiting..." << std::endl;
 
     return 0;
 }

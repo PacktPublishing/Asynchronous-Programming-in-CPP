@@ -4,12 +4,15 @@
 #include <iostream>
 #include <mutex>
 #include <random>
+#include <syncstream>
 #include <thread>
+
+#define sync_cout std::osyncstream(std::cout)
 
 namespace {
 int result = 0;
 std::mutex mtx;
-};  // namespace
+};
 
 void func(int& result) {
     // Simulate some work and return random value in range [1,10]
@@ -31,17 +34,17 @@ int main() {
     // Get result value by reference
     std::thread t1(func, std::ref(result));
     t1.join();
-    std::cout << "T1 result: " << result << std::endl;
+    sync_cout << "T1 result: " << result << std::endl;
 
     // Get result value by lambda capture
     std::thread t2([&]() { func(result); });
     t2.join();
-    std::cout << "T2 result: " << result << std::endl;
+    sync_cout << "T2 result: " << result << std::endl;
 
     // Get result value by shared variable and mutex
     std::thread t3(funcWithMutex);
     t3.join();
-    std::cout << "T3 result: " << result << std::endl;
+    sync_cout << "T3 result: " << result << std::endl;
 
     return 0;
 }

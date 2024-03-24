@@ -2,18 +2,16 @@
 #include <syncstream>
 #include <thread>
 
-namespace {
-std::osyncstream sync_out(std::cout);
-}
+#define sync_cout std::osyncstream(std::cout)
 
 void func() { 
-    sync_out << "Using function pointer" << std::endl; 
+    sync_cout << "Using function pointer" << std::endl; 
 }
 
 class FuncObjectClass {
    public:
     void operator()() { 
-        sync_out << "Using function object class" << std::endl; 
+        sync_cout << "Using function object class" << std::endl; 
     }
 };
 
@@ -23,13 +21,13 @@ int main() {
 
     // Start thread 2 using a lambda function
     auto lambda_func = []() { 
-        sync_out << "Using lambda function" << std::endl; 
+        sync_cout << "Using lambda function" << std::endl; 
     };
     std::thread t2(lambda_func);
 
     // Start thread 3 using an embedded lambda function
     std::thread t3([]() { 
-        sync_out << "Using embedded lambda function" << std::endl; 
+        sync_cout << "Using embedded lambda function" << std::endl; 
     });
 
     // Start thread 4 using a function object (overloading operator() )
@@ -40,10 +38,10 @@ int main() {
     class Obj {
        public:
         void func() { 
-            sync_out << "Using a non-static member function" << std::endl; 
+            sync_cout << "Using a non-static member function" << std::endl; 
         }
         static void static_func() { 
-            sync_out << "Using a static member function" << std::endl; 
+            sync_cout << "Using a static member function" << std::endl; 
         }
     };
 

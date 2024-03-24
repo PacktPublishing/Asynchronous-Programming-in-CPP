@@ -3,18 +3,19 @@
 #include <syncstream>
 #include <thread>
 
+#define sync_cout std::osyncstream(std::cout)
+
 namespace {
-std::osyncstream sync_out(std::cout);
 int timeout = 3;
 }
 
 void daemonThread() {
-    sync_out << "Daemon thread starting..." << std::endl;
+    sync_cout << "Daemon thread starting..." << std::endl;
     while (timeout-- > 0) {
-        sync_out << "Daemon thread is running..." << std::endl;
+        sync_cout << "Daemon thread is running..." << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
-    sync_out << "Daemon thread exiting..." << std::endl;
+    sync_cout << "Daemon thread exiting..." << std::endl;
 }
 
 int main() {
@@ -23,6 +24,6 @@ int main() {
 
     std::this_thread::sleep_for(std::chrono::seconds(timeout + 1));
 
-    sync_out << "Main thread exiting..." << std::endl;
+    sync_cout << "Main thread exiting..." << std::endl;
     return 0;
 }

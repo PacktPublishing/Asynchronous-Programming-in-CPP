@@ -4,13 +4,11 @@
 #include <thread>
 #include <vector>
 
-namespace {
-std::osyncstream sync_out(std::cout);
-}
+#define sync_cout std::osyncstream(std::cout)
 
 // Passing arguments by value
 void funcByValue(const std::string& str, int val) { 
-    sync_out << "str: " << str << ", val: " << val << std::endl; 
+    sync_cout << "str: " << str << ", val: " << val << std::endl; 
 }
 
 // Passing arguments by reference
@@ -20,11 +18,11 @@ void modifyValues(std::string& str, int& val) {
 }
 
 void printVector(const std::vector<int>& v) {
-    sync_out << "Vector: ";
+    sync_cout << "Vector: ";
     for (int num : v) {
-        sync_out << num << " ";
+        sync_cout << num << " ";
     }
-    sync_out << std::endl;
+    sync_cout << std::endl;
 }
 
 int main() {
@@ -38,7 +36,7 @@ int main() {
     int val = 1;
     std::thread t2(modifyValues, std::ref(str2), std::ref(val));
     t2.join();
-    sync_out << "str: " << str2 << ", val: " << val << std::endl;
+    sync_cout << "str: " << str2 << ", val: " << val << std::endl;
 
     // Passing argument by const reference
     std::vector<int> v{1, 2, 3, 4, 5};
@@ -54,7 +52,9 @@ int main() {
 
     // Lambda function with captures
     std::string str5{"Hello"};
-    std::thread t5([&]() { sync_out << "str: " << str5 << ", val: " << val << std::endl; });
+    std::thread t5([&]() { 
+        sync_cout << "str: " << str5 << ", val: " << val << std::endl; 
+    });
     t5.join();
 
     return 0;

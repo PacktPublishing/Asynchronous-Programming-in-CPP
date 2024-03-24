@@ -5,9 +5,7 @@
 #include <syncstream>
 #include <thread>
 
-namespace {
-std::osyncstream sync_out(std::cout);
-}
+#define sync_cout std::osyncstream(std::cout)
 
 using namespace std::chrono_literals;
 
@@ -17,16 +15,15 @@ class Timer {
     typedef std::function<void(void)> Callback;
 
     Timer(const Interval &interval, const Callback &callback) {
-        sync_out << "Timer: Starting with interval " << interval << std::endl;
+        sync_cout << "Timer: Starting with interval " << interval << std::endl;
         t = std::jthread([&]() {
             while (running.load() == true) {
-                sync_out << "Timer: Running callback " << val.load() << std::endl;
+                sync_cout << "Timer: Running callback " << val.load() << std::endl;
                 val++;
                 callback();
-                sync_out.flush();
                 std::this_thread::sleep_for(std::chrono::milliseconds(interval));
             }
-            sync_out << "Timer: Exit" << std::endl;
+            sync_cout << "Timer: Exit" << std::endl;
         });
     }
 
@@ -40,19 +37,21 @@ class Timer {
 
 int main(void) {
     // Create timer executing callback function every 500ms
-    sync_out << "Main: Create timer" << std::endl;
-    Timer timer(std::chrono::milliseconds(500), [&]() { sync_out << "Callback: Running..." << std::endl; });
+    sync_cout << "Main: Create timer" << std::endl;
+    Timer timer(std::chrono::milliseconds(500), [&]() { 
+        sync_cout << "Callback: Running..." << std::endl; 
+    });
 
     // Use secondary thread to stop timer after 2 seconds
     std::jthread t([&]() {
         std::this_thread::sleep_for(std::chrono::seconds(2));
-        sync_out << "Thread2: Stopping timer" << std::endl;
+        sync_cout << "Thread2: Stopping timer" << std::endl;
         timer.stop();
-        sync_out << "Thread2: Exit thread" << std::endl;
+        sync_cout << "Thread2: Exit thread" << std::endl;
     });
 
     // Wait main thread for 3 seconds
     std::this_thread::sleep_for(std::chrono::seconds(3));
-    sync_out << "Main thread: Exit" << std::endl;
+    sync_cout << "Main thread: Exit" << std::endl;
     return 0;
 }
