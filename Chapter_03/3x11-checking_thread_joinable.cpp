@@ -2,8 +2,10 @@
 #include <iostream>
 #include <thread>
 
-void func() { 
-    std::this_thread::sleep_for(std::chrono::milliseconds(100)); 
+using namespace std::chrono_literals;
+
+void func() {
+    std::this_thread::sleep_for(100ms);
 }
 
 int main() {

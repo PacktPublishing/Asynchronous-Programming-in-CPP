@@ -21,7 +21,7 @@ class Timer {
                 sync_cout << "Timer: Running callback " << val.load() << std::endl;
                 val++;
                 callback();
-                std::this_thread::sleep_for(std::chrono::milliseconds(interval));
+                std::this_thread::sleep_for(interval);
             }
             sync_cout << "Timer: Exit" << std::endl;
         });
@@ -38,20 +38,20 @@ class Timer {
 int main(void) {
     // Create timer executing callback function every 500ms
     sync_cout << "Main: Create timer" << std::endl;
-    Timer timer(std::chrono::milliseconds(500), [&]() { 
-        sync_cout << "Callback: Running..." << std::endl; 
+    Timer timer(500ms, [&]() {
+        sync_cout << "Callback: Running..." << std::endl;
     });
 
     // Use secondary thread to stop timer after 2 seconds
     std::jthread t([&]() {
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::this_thread::sleep_for(2s);
         sync_cout << "Thread2: Stopping timer" << std::endl;
         timer.stop();
         sync_cout << "Thread2: Exit thread" << std::endl;
     });
 
     // Wait main thread for 3 seconds
-    std::this_thread::sleep_for(std::chrono::seconds(3));
+    std::this_thread::sleep_for(3s);
     sync_cout << "Main thread: Exit" << std::endl;
     return 0;
 }

@@ -6,6 +6,8 @@
 
 #define sync_cout std::osyncstream(std::cout)
 
+using namespace std::chrono_literals;
+
 namespace {
 int val = 0;
 std::mutex mtx;
@@ -19,9 +21,9 @@ int main() {
                 // Do some work: Active wait for 3 second
                 sync_cout << name << ": working" << std::endl;
                 std::lock_guard<std::mutex> lock(mtx);
-                auto start = std::chrono::steady_clock::now();                
-                for (auto now = start; 
-                          now < start + std::chrono::seconds{3}; 
+                auto start = std::chrono::steady_clock::now();
+                for (auto now = start;
+                          now < start + 3s;
                           now = std::chrono::steady_clock::now()) {
                 }
             } else {

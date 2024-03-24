@@ -11,7 +11,7 @@ using namespace std::chrono_literals;
 
 class Counter {
     using Callback = std::function<void(void)>;
-   
+
    public:
 
     Counter(const Callback &callback) {
@@ -20,7 +20,7 @@ class Counter {
             while (running.load() == true) {
                 sync_cout << "Counter: Running callback..." << std::endl;
                 callback();
-                std::this_thread::sleep_for(std::chrono::milliseconds(1s));
+                std::this_thread::sleep_for(1s);
             }
             sync_cout << "Counter: Exit" << std::endl;
         });
@@ -36,16 +36,16 @@ class Counter {
 int main(void) {
     // Create timer executing callback function every 500ms
     sync_cout << "Main: Create Counter" << std::endl;
-    Counter counter([&]() { 
-        sync_cout << "Callback: Running..." << std::endl; 
+    Counter counter([&]() {
+        sync_cout << "Callback: Running..." << std::endl;
     });
 
     // Wait main thread for 3 seconds
-    std::this_thread::sleep_for(std::chrono::seconds(3));
+    std::this_thread::sleep_for(3s);
 
     // Stop counter and wait for 1 second
     counter.stop();
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::this_thread::sleep_for(1s);
 
     sync_cout << "Main thread: Exit" << std::endl;
     return 0;

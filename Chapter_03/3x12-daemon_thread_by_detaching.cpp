@@ -5,6 +5,8 @@
 
 #define sync_cout std::osyncstream(std::cout)
 
+using namespace std::chrono_literals;
+
 namespace {
 int timeout = 3;
 }
@@ -13,7 +15,7 @@ void daemonThread() {
     sync_cout << "Daemon thread starting..." << std::endl;
     while (timeout-- > 0) {
         sync_cout << "Daemon thread is running..." << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(1s);
     }
     sync_cout << "Daemon thread exiting..." << std::endl;
 }

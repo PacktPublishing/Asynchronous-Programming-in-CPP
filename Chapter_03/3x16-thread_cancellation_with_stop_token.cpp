@@ -36,7 +36,7 @@ int main() {
     show_stop_props("stop_token", stop_token);
 
     // worker2 will be requested to stop from a stopper thread from source.
-    auto worker2 = std::jthread(func_with_stop_token);    
+    auto worker2 = std::jthread(func_with_stop_token);
     std::stop_source stop_source = worker2.get_stop_source();
     show_stop_props("stop_source", stop_source);
 
@@ -51,8 +51,8 @@ int main() {
         std::stop_callback scoped_callback(worker2.get_stop_token(), []{
             sync_cout << "stop_callback: Scoped stop callback will not execute\n";
         });
-    }    
-    
+    }
+
     // Worker1: Request stop from main thread via stop_token
     sync_cout << "main_thread: Request stop and join worker1\n";
     worker1.request_stop();

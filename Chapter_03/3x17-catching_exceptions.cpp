@@ -1,4 +1,5 @@
 #include <atomic>
+#include <chrono>
 #include <exception>
 #include <iostream>
 #include <mutex>
@@ -6,12 +7,14 @@
 #include <string>
 #include <thread>
 
+using namespace std::chrono_literals;
+
 std::exception_ptr captured_exception;
 std::mutex mtx;
 
 void func() {
     try {
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(1s);
         throw std::runtime_error("Error in func used within thread");
     } catch (...) {
         // Capture exception into an atomic
@@ -25,7 +28,7 @@ int main() {
 
     // Check for captured exception periodically
     while (!captured_exception) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+        std::this_thread::sleep_for(250ms);
         std::cout << "In main thread" << std::endl;
     }
 
