@@ -25,3 +25,5 @@ set(BINARY_DIR ${CMAKE_BINARY_DIR}/bin)
 
 # Add chapters
 add_subdirectory(Chapter_03)
+add_subdirectory(Chapter_06)
+add_subdirectory(Chapter_07)
