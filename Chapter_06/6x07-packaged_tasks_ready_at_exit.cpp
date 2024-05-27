@@ -5,6 +5,8 @@
 #include <thread>
 #include <utility>
 
+using namespace std::chrono_literals;
+
 void task_func(std::future<void>& output) {
     std::packaged_task<void(bool&)> task{[](bool& done) { done = true; }};
     auto result = task.get_future();
@@ -14,8 +16,8 @@ void task_func(std::future<void>& output) {
 
     std::cout << "task_func: done = " << std::boolalpha << done << std::endl;
 
-    auto status = result.wait_for(std::chrono::seconds(0));
-    if (status == std::future_status::timeout) 
+    auto status = result.wait_for(0s);
+    if (status == std::future_status::timeout)
         std::cout << "task_func: result not ready" << std::endl;
 
     output = std::move(result);
@@ -27,8 +29,8 @@ int main() {
     std::thread t{task_func, std::ref(result)};
     t.join();
 
-    auto status = result.wait_for(std::chrono::seconds(0));
-    if (status == std::future_status::ready) 
+    auto status = result.wait_for(0s);
+    if (status == std::future_status::ready)
         std::cout << "main: result ready" << std::endl;
     return 0;
 }

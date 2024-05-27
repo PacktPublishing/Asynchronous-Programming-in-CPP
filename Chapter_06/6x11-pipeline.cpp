@@ -3,7 +3,7 @@
 #include <syncstream>
 #include <vector>
 
-using namespace std::literals;
+using namespace std::chrono_literals;
 
 #define sync_cout std::osyncstream(std::cout)
 
