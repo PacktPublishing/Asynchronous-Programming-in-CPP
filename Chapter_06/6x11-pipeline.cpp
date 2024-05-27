@@ -85,14 +85,14 @@ int main() {
 
     // Tasks creation.
     Task task1(1, sleep1s);
-    Task task2(2, sleep1s, task1.get_dependency());
+    Task task2(2, sleep2s, task1.get_dependency());
     Task task3(3, sleep1s, task2.get_dependency());
-    Task task4(4, sleep2s, task3.get_dependency());
+    Task task4(4, sleep2s, task2.get_dependency());
     Task task5(5, sleep2s, task3.get_dependency(), task4.get_dependency());    
 
     // Starting the pipeline
     // Launch all tasks. They will be waiting for their dependency promise to be triggered.
-    // As Task #1 (tasks[0]) has no dependencies, it will start straight away.
+    // As Task #1 has no dependencies, it will start straight away.
     // Other tasks will be waiting until other previous tasks finish.
     sync_cout << "Starting the pipeline..." << std::endl;
     task1();
