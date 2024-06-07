@@ -1,7 +1,6 @@
 #include <chrono>
 #include <functional>
 #include <iostream>
-#include <ostream>
 #include <syncstream>
 #include <thread>
 
@@ -33,11 +32,11 @@ class Counter {
     std::atomic_bool running{true};
 };
 
-int main(void) {
+int main() {
     // Create timer executing callback function every 500ms
-    sync_cout << "Main: Create Counter" << std::endl;
-    Counter counter([&]() {
-        sync_cout << "Callback: Running..." << std::endl;
+    sync_cout << "Main: Create Counter\n";
+    Counter counter([]() {
+        sync_cout << "Callback: Running...\n";
     });
 
     // Wait main thread for 3 seconds
@@ -47,6 +46,6 @@ int main(void) {
     counter.stop();
     std::this_thread::sleep_for(1s);
 
-    sync_cout << "Main thread: Exit" << std::endl;
+    sync_cout << "Main thread: Exit\n";
     return 0;
 }

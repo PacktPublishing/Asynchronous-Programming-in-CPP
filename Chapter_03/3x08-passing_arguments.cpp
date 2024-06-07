@@ -53,7 +53,7 @@ int main() {
     // Lambda function with captures
     std::string str5{"Hello"};
     std::thread t5([&]() {
-        sync_cout << "str: " << str5 << ", val: " << val << std::endl;
+        sync_cout << "str: " << str5 << std::endl;
     });
     t5.join();
 
