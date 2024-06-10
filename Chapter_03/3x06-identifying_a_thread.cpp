@@ -1,5 +1,4 @@
 #include <chrono>
-#include <functional>
 #include <iostream>
 #include <thread>
 
@@ -10,7 +9,8 @@ void func() {
 }
 
 int main() {
-    std::jthread t(func);
+    std::thread t(func);
     std::cout << "Thread ID: " << t.get_id() << std::endl;
+    t.join();
     return 0;
 }
