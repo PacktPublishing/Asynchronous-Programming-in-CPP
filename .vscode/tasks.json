@@ -6,6 +6,9 @@
             "command": "/usr/bin/g++",
             "args": [
                 "-std=c++20",
+                "-Wall",
+                "-Wextra",
+                "-pedantic",
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
