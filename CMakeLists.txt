@@ -16,8 +16,8 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 # Linker flags
 if((CMAKE_CXX_COMPILER_ID MATCHES GNU) OR (CMAKE_CXX_COMPILER_ID MATCHES Clang))
-  set(CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS} -O0 -g3")
-  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O3 -DNDEBUG")
+  set(CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS} -O0 -g3 -Wall -Wextra -pedantic")
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O3 -DNDEBUG -Wall -Wextra -pedantic")
 endif()
 
 # Set the output directory for binaries
@@ -28,3 +28,4 @@ add_subdirectory(Chapter_03)
 add_subdirectory(Chapter_04)
 add_subdirectory(Chapter_06)
 add_subdirectory(Chapter_07)
+add_subdirectory(Chapter_09)
