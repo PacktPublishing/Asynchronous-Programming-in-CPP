@@ -26,6 +26,6 @@ double average_squares(int n) {
 int main() {
     int N = 100;
     std::cout << std::fixed << std::setprecision(2);
-    std::cout << "Average of squares for N = " << N << " is " << average_squares(N) << std::endl;
+    std::cout << "Average of squares for N = " << N << " is " << average_squares(N) << '\n';
     return 0;
 }

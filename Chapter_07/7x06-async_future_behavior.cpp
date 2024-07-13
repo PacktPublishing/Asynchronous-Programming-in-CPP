@@ -56,7 +56,7 @@ int main() {
     std::vector<unsigned> res;
     start = std::chrono::high_resolution_clock::now();
     for (unsigned i = 0; i < NUM_TASKS; i++) {
-        fut = std::async(std::launch::async, func, i);
+        auto fut = std::async(std::launch::async, func, i);
         res.push_back(fut.get());
     }
     std::cout << "Reused future and storing results: " << duration_from(start) << '\n';
