@@ -7,24 +7,22 @@
 std::string message;
 std::atomic<bool> ready{false};
 
-void reader()
-{
-    while (!ready.load())
-    {
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+void reader() {
+    using namespace std::chrono_literals;
+
+    while (!ready.load()) {
+        std::this_thread::sleep_for(1ms);
     }
 
     std::cout << "Message received = " << message << std::endl;
 }
 
-void writer()
-{
+void writer() {
     message = "Hello, World!";
     ready.store(true);
 }
 
-int main()
-{
+int main() {
     std::thread t1(reader);
     std::thread t2(writer);
 
