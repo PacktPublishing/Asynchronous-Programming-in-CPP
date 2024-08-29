@@ -66,7 +66,8 @@ void multiply_add_barrier() {
             sum[id] += numbers[i];
         }
 
-        map_barrier.arrive();
+        auto tk = map_barrier.arrive();
+        (void) tk;
     };
 
     std::vector<std::jthread> workers;
