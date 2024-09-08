@@ -9,7 +9,6 @@
 using namespace std::chrono_literals;
 
 namespace {
-int val = 0;
 std::mutex mtx;
 }
 

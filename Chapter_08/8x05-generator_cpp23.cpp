@@ -1,3 +1,5 @@
+// Available in C++23 with GCC14. 
+// Clang does not support std::generator.
 #include <generator>
 #include <iostream>
 
