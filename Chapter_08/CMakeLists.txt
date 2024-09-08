@@ -1,11 +1,14 @@
-cmake_minimum_required(VERSION 3.29)
-project(coroutines)
+# Output directory
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BINARY_DIR}/Chapter_08)
 
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_executable(coroutines 8x01-simple_coroutine.cpp
-        8x02-yield_coroutine.cpp
-        8x03-waiting_coroutine.cpp
-        8x06-integer_parser.cpp
-        8x04-fibonacci_generator.cpp
-        8x05-generator_cpp23.cpp)
+# Create executable for each cpp file
+file(GLOB SOURCES "*.cpp")
+foreach(SOURCE ${SOURCES})
+    get_filename_component(EXECUTABLE_NAME ${SOURCE} NAME_WE)
+    add_executable(${EXECUTABLE_NAME} ${SOURCE})
+    target_link_libraries(${EXECUTABLE_NAME})
+endforeach()

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5..3.29)
 project("Asynchronous Programming in C++")
 
 # Set C++ standard
@@ -29,4 +29,5 @@ add_subdirectory(Chapter_04)
 add_subdirectory(Chapter_05)
 add_subdirectory(Chapter_06)
 add_subdirectory(Chapter_07)
+add_subdirectory(Chapter_08)
 add_subdirectory(Chapter_09)

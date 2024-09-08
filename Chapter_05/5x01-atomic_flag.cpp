@@ -33,7 +33,7 @@ int main() {
     std::mutex m;
     auto start = std::chrono::high_resolution_clock::now();
     std::vector<std::thread> threads;
-    for (int i = 0; i < NUM_THREADS; ++i) {
+    for (uint32_t i = 0; i < NUM_THREADS; ++i) {
         threads.emplace_back([&m] {
             for (int i = 0; i < 200000000; ++i) {
                 m.lock();
@@ -53,7 +53,7 @@ int main() {
     spin_lock sl;
     counter = 0;
     start = std::chrono::high_resolution_clock::now();
-    for (int i = 0; i < NUM_THREADS; ++i) {
+    for (uint32_t i = 0; i < NUM_THREADS; ++i) {
         threads[i] = std::thread([&sl] {
             for (int i = 0; i < 500000000; ++i) {
                 sl.lock();
@@ -72,7 +72,7 @@ int main() {
     std::cout << counter << std::endl;
 
     start = std::chrono::high_resolution_clock::now();
-    for (int i = 0; i < NUM_THREADS; ++i) {
+    for (uint32_t i = 0; i < NUM_THREADS; ++i) {
         threads[i] = std::thread([]() {
             for (int i = 0; i < 500000000; ++i) {
                 atomic_counter.fetch_add(1, std::memory_order_relaxed);

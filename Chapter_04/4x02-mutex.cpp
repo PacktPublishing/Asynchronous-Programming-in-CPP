@@ -43,11 +43,13 @@ int main() {
         }
     };
 
-    std::thread t1(worker_exceptions);
-    std::thread t2(worker);
+    std::thread t1(worker);
+    std::thread t2(worker_exceptions);    
+    std::thread t3(worker_try);
 
     t1.join();
     t2.join();
+    t3.join();
 
     std::cout << std::format("Final counter value: {0}\n", counter);
 

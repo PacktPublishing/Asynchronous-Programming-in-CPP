@@ -149,7 +149,7 @@ int main() {
     // parse the first half of the string
     std::size_t sz = num1.size();
     async_parse<int64_t, char> num_parser = parse_string();
-    for (int i = 0; i < sz / 2; ++i) {
+    for (std::size_t i = 0; i < sz / 2; ++i) {
         num_parser.put(num1[i]);
     }
 

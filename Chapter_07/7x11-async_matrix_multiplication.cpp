@@ -8,7 +8,7 @@ using matrix_t = std::vector<std::vector<int>>;
 
 int dot_product(const std::vector<int>& a, const std::vector<int>& b) {
     int sum = 0;
-    for (size_t i = 0; i < a.size(); ++i) {
+    for (std::size_t i = 0; i < a.size(); ++i) {
         sum += a[i] * b[i];
     }
     return sum;
@@ -19,18 +19,18 @@ matrix_t matrix_multiply(const matrix_t& A, const matrix_t& B) {
     if (A[0].size() != B.size()) {
         throw new std::runtime_error("Wrong matrices dimmensions.");
     }
-    size_t rows = A.size();
-    size_t cols = B[0].size();
-    size_t inner_dim = B.size();
+    std::size_t rows = A.size();
+    std::size_t cols = B[0].size();
+    std::size_t inner_dim = B.size();
     matrix_t res(rows, std::vector<int>(cols, 0));
 
     // Launch one task when multiplying row from A and column from B
     std::vector<std::future<int>> futs;
-    for (auto i = 0; i < rows; ++i) {
-        for (auto j = 0; j < cols; ++j) {
+    for (std::size_t i = 0; i < rows; ++i) {
+        for (std::size_t j = 0; j < cols; ++j) {
             // Extract column j from B
             std::vector<int> column(inner_dim);
-            for (size_t k = 0; k < inner_dim; ++k) {
+            for (std::size_t k = 0; k < inner_dim; ++k) {
                 column[k] = B[k][j];
             }
             // Multiply row i from A and column j from B
@@ -39,8 +39,8 @@ matrix_t matrix_multiply(const matrix_t& A, const matrix_t& B) {
     }
 
     // Collect results
-    for (auto i = 0; i < rows; ++i) {
-        for (auto j = 0; j < cols; ++j) {
+    for (std::size_t i = 0; i < rows; ++i) {
+        for (std::size_t j = 0; j < cols; ++j) {
             res[i][j] = futs[i * cols + j].get();
         }
     }
