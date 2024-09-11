@@ -13,7 +13,7 @@ boost::asio::awaitable<void> echo(tcp::socket socket) {
         std::size_t bytes_read = co_await socket.async_read_some(boost::asio::buffer(data), boost::asio::use_awaitable);
 
         if (bytes_read == 0) {
-            std::cout << "No data. Exitting loop...\n";
+            std::cout << "No data. Exiting loop...\n";
             break;
         }
 
