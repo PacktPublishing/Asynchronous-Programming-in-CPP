@@ -1,8 +1,11 @@
-cmake_minimum_required(VERSION 3.29)
-project(BoostCobalt)
+# Output directory
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BINARY_DIR}/Chapter_10)
 
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# Include Boost::Cobalt
 find_package(Boost 1.86.0 REQUIRED COMPONENTS thread system container cobalt)
 if(NOT Boost_FOUND)
     message(FATAL_ERROR "Boost is required but not found.")
