@@ -16,8 +16,7 @@ const unsigned num_messages_per_thread = 5;
 class Logger {
    public:
     Logger(boost::asio::io_context& io_context, const std::string& filename)
-        : strand_(io_context), file_(filename
-        , std::ios::out | std::ios::app) 
+        : strand_(io_context), file_(filename, std::ios::out | std::ios::app)
     {
         if (!file_.is_open()) {
             throw std::runtime_error("Failed to open log file");
@@ -30,8 +29,8 @@ class Logger {
     }
 
    private:
-    void do_log(const std::string message) { 
-        file_ << message << std::endl; 
+    void do_log(const std::string message) {
+        file_ << message << std::endl;
     }
 
     boost::asio::io_context::strand strand_;
@@ -39,7 +38,7 @@ class Logger {
 };
 
 void worker(std::shared_ptr<Logger> logger, int id) {
-    for (unsigned i = 0; i < num_messages_per_thread; ++i) {        
+    for (unsigned i = 0; i < num_messages_per_thread; ++i) {
         std::ostringstream oss;
         oss << "Thread " << id << " logging message " << i;
         logger->log(oss.str());

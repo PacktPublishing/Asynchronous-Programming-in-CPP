@@ -1,28 +1,30 @@
 #include <boost/asio.hpp>
 #include <chrono>
 #include <iostream>
+#include <syncstream>
 #include <thread>
+
+#define sync_cout std::osyncstream(std::cout)
 
 using namespace std::chrono_literals;
 
-void completion_handler(const boost::system::error_code& ec) {
-    if (!ec) {
-        std::cout << "Timer expired successfuly!\n";
-    } else {
-        std::cout << "Timer error: " << ec.message() << std::endl;
-    }
-}
-
 void background_task(int i) {
-    std::cout << "Thread " << i << ": Starting...\n";
+    sync_cout << "Thread " << i << ": Starting...\n";
     boost::asio::io_context io_context;
     auto work_guard = boost::asio::make_work_guard(io_context);
 
-    std::cout << "Thread " << i << ": Setup timer...\n";
+    sync_cout << "Thread " << i << ": Setup timer...\n";
     boost::asio::steady_timer timer(io_context, 1s);
-    timer.async_wait(completion_handler);
+    timer.async_wait([&](const boost::system::error_code& ec) {
+        if (!ec) {
+            sync_cout << "Timer expired successfuly!\n";
+        } else {
+            sync_cout << "Timer error: " << ec.message() << '\n';
+        }
+        work_guard.reset();
+    });
 
-    std::cout << "Thread " << i << ": Running io_context...\n";
+    sync_cout << "Thread " << i << ": Running io_context...\n";
     io_context.run();
 }
 
