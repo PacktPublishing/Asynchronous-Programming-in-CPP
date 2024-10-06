@@ -9,7 +9,7 @@ int asyncFunc() {
     return 42;
 }
 
-TEST(AsyncTests, HandleAsyncOperation) {
+TEST(AsyncTests, TestHandleAsyncOperation) {
     std::future<int> result = std::async(std::launch::async, asyncFunc);
     EXPECT_EQ(result.get(), 42);
 }

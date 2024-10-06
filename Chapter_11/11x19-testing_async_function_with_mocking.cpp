@@ -12,7 +12,7 @@ class MockTaskScheduler : public AsyncTaskScheduler {
     MOCK_METHOD(int, runTask, (std::function<int()> task), (override));
 };
 
-TEST(AsyncTests, MockMethod) {
+TEST(AsyncTests, TestMockMethod) {
     using namespace testing;
 
     MockTaskScheduler scheduler;

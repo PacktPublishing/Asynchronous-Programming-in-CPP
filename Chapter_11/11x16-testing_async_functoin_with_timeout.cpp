@@ -10,7 +10,7 @@ int asyncFunc() {
     return 42;
 }
 
-TEST(AsyncTest, TimeOut) {
+TEST(AsyncTest, TestTimeOut) {
     auto start = steady_clock::now();
     std::future<int> result = std::async(std::launch::async, asyncFunc);
 

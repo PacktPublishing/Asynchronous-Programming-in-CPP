@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # Include Boost::Cobalt
 find_package(Boost 1.86.0 REQUIRED COMPONENTS thread system container cobalt)
 if(NOT Boost_FOUND)
-    message(FATAL_ERROR "Boost 1.86.0 is required but not found.")
+    message(FATAL_ERROR "Boost 1.86.0 with Boost.Cobalt is required but not found.")
 endif()
 
 # Include Boost directories

@@ -13,7 +13,7 @@ void asyncFunc(boost::asio::io_context& io_context, std::function<void(int)> cal
     });
 }
 
-TEST(AsyncTest, BoostAsio) {
+TEST(AsyncTest, TestBoostAsio) {
     boost::asio::io_context io_context;
 
     int result = 0;

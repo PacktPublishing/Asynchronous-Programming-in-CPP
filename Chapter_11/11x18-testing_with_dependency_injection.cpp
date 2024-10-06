@@ -14,7 +14,7 @@ class MockTaskScheduler : public AsyncTaskScheduler {
     }
 };
 
-TEST(AsyncTests, DependencyInjection) {
+TEST(AsyncTests, TestDependencyInjection) {
     MockTaskScheduler scheduler;
 
     auto task = []() -> int {
