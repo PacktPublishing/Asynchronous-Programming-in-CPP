@@ -26,4 +26,4 @@ apt install -y clang clang-format clang-tidy clang-tools llvm
 apt install -y cmake
 
 # Install GoogleTest
-apt install -y libgtest-dev
+apt install -y libgtest-dev libgmock-dev
