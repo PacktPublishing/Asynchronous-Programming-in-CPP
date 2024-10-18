@@ -27,3 +27,15 @@ apt install -y cmake
 
 # Install GoogleTest
 apt install -y libgtest-dev libgmock-dev
+
+# Build and install Google Benchmark
+mkdir build_benchmark
+cd build_benchmark
+git clone https://github.com/google/benchmark.git
+cd benchmark
+cmake -E make_directory "build"
+cmake -DCMAKE_BUILD_TYPE=Release -S . -B "build"
+cmake --build "build" --config Release
+cmake --build "build" --config Release --target install
+cd ..
+rm -rf build_benchmark
