@@ -1,10 +1,7 @@
-cmake_minimum_required(VERSION 3.28)
-
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-
+# Include Benchmark library
 find_package(benchmark REQUIRED)
 
+# Set compiler flags
 set(CMAKE_CXX_FLAGS_DEBUG "")
 set(CMAKE_CXX_FLAGS_RELEASE "")
 set(CMAKE_CXX_FLAGS "-O3 -DNDEBUG -std=c++20 -march=native")
@@ -17,4 +14,5 @@ file(GLOB SOURCES "*.cpp")
 foreach(SOURCE ${SOURCES})
     get_filename_component(EXECUTABLE_NAME ${SOURCE} NAME_WE)
     add_executable(${EXECUTABLE_NAME} ${SOURCE})
+    target_link_libraries(${EXECUTABLE_NAME} benchmark::benchmark)
 endforeach()
